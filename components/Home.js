@@ -1,26 +1,29 @@
 import React from 'react';
-import { ImageBackground, View, Text, TextInput, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, ImageBackground, View, Text, TextInput, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements/dist/buttons/Button';
-import image from '../assets/Background Image.png';
+import image from '../assets/Image1.png';
 
+const handleError = (e) => { console.log(e.nativeEvent.error); };
 export default class Home extends React.Component {
   constructor(props) {
    super(props);
    this.state = { 
       uname: '',
-      bgcolor: 'red' 
+      bgcolor: 'gray' 
     };
   }
  
   render() {
 
     return (
-      <View style={styles.container}>
-        <ImageBackground source={image} style={styles.image}>
+      <View
+        style={styles.container}>
+        <ImageBackground source={image} onError={handleError} style={styles.image}>
           <View style={styles.box1}>
             <Text style={[styles.boldText, styles.title]}>Chat App</Text>
           </View>
-          <View style={styles.box2}>
+          <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} 
+            style={styles.box2}>
             <TextInput
               style={[styles.normalText, styles.uname]}
               onChangeText={(text) => this.setState({uname: text})}
@@ -55,7 +58,7 @@ export default class Home extends React.Component {
               title="Start Chatting"
               onPress={() => this.props.navigation.navigate('Chat', { uname: this.state.uname, bgcolor: this.state.bgcolor })}
             />
-          </View>
+          </KeyboardAvoidingView>
         </ImageBackground>
       </View>
     )
@@ -70,8 +73,8 @@ const styles = StyleSheet.create({
   },
   image:{
     flex:1,
-    justifyContent:'center',
     resizeMode:'cover'
+
   },
   box1: {
     flex:64,    
@@ -118,7 +121,7 @@ const styles = StyleSheet.create({
   round: {
     height:50,
     width: 50,
-    borderRadius:25
+    borderRadius:25,
   },
   chatButton: {
     fontSize:16,
