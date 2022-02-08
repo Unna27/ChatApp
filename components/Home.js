@@ -9,10 +9,11 @@ export default class Home extends React.Component {
    super(props);
    this.state = { 
       uname: '',
-      bgcolor: 'gray' 
+      bgcolor: 'gray',
+      isSelected: false
     };
   }
- 
+
   render() {
 
     return (
@@ -32,26 +33,36 @@ export default class Home extends React.Component {
             />
             <Text style={styles.normalText}>Choose Background Color</Text>
             <View style={styles.buttonStyleContainer}>
-              <Button
-                buttonStyle={[styles.round, {backgroundColor:'#090C08'}]}
-                title=""
-                onPress={() => {this.setState({bgcolor: '#090C08'})}}
-              />
-              <Button
-                buttonStyle={[styles.round, {backgroundColor:'#474056'}]}
-                title=""
-                onPress={() => {this.setState({bgcolor: '#474056'})}}
-              />
-              <Button
-                buttonStyle={[styles.round, {backgroundColor:'#8A95A5'}]}
-                title=""
-                onPress={() => {this.setState({bgcolor: '#8A95A5'})}}
-              />
-              <Button
-                buttonStyle={[styles.round, {backgroundColor:'#B9C6AE'}]}
-                title=""
-                onPress={() => {this.setState({bgcolor: '#B9C6AE'})}}
-              />
+              <View style={this.state.isSelected && this.state.bgcolor==='#090C08' && styles.buttonSelected} >
+                 <Button
+                  buttonStyle={[styles.round, {backgroundColor:'#090C08'}]}
+                  title=""
+                  onPress={() => {this.setState({bgcolor: '#090C08', isSelected: true})}}
+                />
+              </View>
+             
+              <View style={this.state.isSelected && this.state.bgcolor==='#474056' && styles.buttonSelected} >
+                <Button
+                  buttonStyle={[styles.round, {backgroundColor:'#474056'}]}
+                  title=""
+                  onPress={() => {this.setState({bgcolor: '#474056'})}}
+                />
+              </View>
+
+              <View style={this.state.isSelected && this.state.bgcolor==='#8A95A5' && styles.buttonSelected} >
+                <Button
+                  buttonStyle={[styles.round, {backgroundColor:'#8A95A5'}]}
+                  title=""
+                  onPress={() => {this.setState({bgcolor: '#8A95A5'})}}
+                />
+              </View>
+              <View style={this.state.isSelected && this.state.bgcolor==='#B9C6AE' && styles.buttonSelected} >
+                <Button
+                  buttonStyle={[styles.round, {backgroundColor:'#B9C6AE'}]}
+                  title=""
+                  onPress={() => {this.setState({bgcolor: '#B9C6AE'})}}
+                />
+              </View>
             </View>
             <Button
               buttonStyle={styles.chatButton}
@@ -118,10 +129,21 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     justifyContent:'space-evenly'
   },
+  buttonSelected: {
+    height: 60,
+    width: 60,
+    borderRadius: 30,
+    borderColor:'red',
+    backgroundColor: '#D3D3D3',
+    opacity:75
+  },
   round: {
     height:50,
     width: 50,
     borderRadius:25,
+    position: 'relative',
+    margin: 5,
+    padding:5
   },
   chatButton: {
     fontSize:16,
