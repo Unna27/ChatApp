@@ -17,14 +17,13 @@ export default class Home extends React.Component {
   render() {
 
     return (
-      <View
-        style={styles.container}>
+      <View style={styles.container}>
         <ImageBackground source={image} onError={handleError} style={styles.image}>
           <View style={styles.box1}>
             <Text style={[styles.boldText, styles.title]}>Chat App</Text>
           </View>
-          <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} 
-            style={styles.box2}>
+          <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+           style={styles.box2}>
             <TextInput
               style={[styles.normalText, styles.uname]}
               onChangeText={(text) => this.setState({uname: text})}
@@ -63,6 +62,7 @@ export default class Home extends React.Component {
                   onPress={() => {this.setState({bgcolor: '#B9C6AE'})}}
                 />
               </View>
+              
             </View>
             <Button
               buttonStyle={styles.chatButton}

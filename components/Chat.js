@@ -62,18 +62,20 @@ renderBubble(props) {
     let {uname, bgcolor} = this.props.route.params;
     this.props.navigation.setOptions( { title: uname });
     return (
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={[styles.container, {backgroundColor: bgcolor}]}>
-      <GiftedChat
-        renderBubble={this.renderBubble.bind(this)} 
-        messages={this.state.messages} // msg to be displayed 
-        onSend={messages => this.onSend(messages)}
-        user={{ 
-          _id: 1,
-          name: 'User1',
-        }} // user who sends msgs
-      />
+      <View style={[styles.container, { backgroundColor: bgcolor}]}>
+        <GiftedChat
+          renderBubble={this.renderBubble.bind(this)} 
+          messages={this.state.messages} // msg to be displayed 
+          onSend={messages => this.onSend(messages)}
+          user={{ 
+            _id: 1,
+            name: 'User1',
+          }} // user who sends msgs
+        />
       { console.log(this.state.messages)}
-      </KeyboardAvoidingView>
+      { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null
+ }
+      </View>
       // <View style={[styles.container, { backgroundColor: bgcolor }]}>
       //   <Text style={styles.normalText}>Hello Screen2!</Text>
       //</View>
@@ -82,8 +84,7 @@ renderBubble(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    color: 'red'
+    flex: 1
   }
 
 });
