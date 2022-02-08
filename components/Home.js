@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardAvoidingView, ImageBackground, View, Text, TextInput, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, ImageBackground, View, Text, TextInput, StyleSheet, Platform } from 'react-native';
 import { Button } from 'react-native-elements/dist/buttons/Button';
 import image from '../assets/Image1.png';
 
