@@ -1,9 +1,10 @@
 import React from 'react';
-import { KeyboardAvoidingView, ImageBackground, View, Text, TextInput, StyleSheet, Platform } from 'react-native';
+import { KeyboardAvoidingView, TouchableOpacity, ImageBackground, View, Text, TextInput, StyleSheet, Platform } from 'react-native';
 import { Button } from 'react-native-elements/dist/buttons/Button';
 import image from '../assets/Image1.png';
 
 const handleError = (e) => { console.log(e.nativeEvent.error); };
+
 export default class Home extends React.Component {
   constructor(props) {
    super(props);
@@ -14,7 +15,7 @@ export default class Home extends React.Component {
     };
   }
 
-  render() {
+render() {
 
     return (
       <View style={styles.container}>
@@ -22,7 +23,7 @@ export default class Home extends React.Component {
           <View style={styles.box1}>
             <Text style={[styles.boldText, styles.title]}>Chat App</Text>
           </View>
-          <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+          <View
            style={styles.box2}>
             <TextInput
               style={[styles.normalText, styles.uname]}
@@ -44,7 +45,7 @@ export default class Home extends React.Component {
                 <Button
                   buttonStyle={[styles.round, {backgroundColor:'#474056'}]}
                   title=""
-                  onPress={() => {this.setState({bgcolor: '#474056'})}}
+                  onPress={() => {this.setState({bgcolor: '#474056', isSelected: true})}}
                 />
               </View>
 
@@ -52,24 +53,25 @@ export default class Home extends React.Component {
                 <Button
                   buttonStyle={[styles.round, {backgroundColor:'#8A95A5'}]}
                   title=""
-                  onPress={() => {this.setState({bgcolor: '#8A95A5'})}}
+                  onPress={() => {this.setState({bgcolor: '#8A95A5', isSelected: true})}}
                 />
               </View>
               <View style={this.state.isSelected && this.state.bgcolor==='#B9C6AE' && styles.buttonSelected} >
                 <Button
                   buttonStyle={[styles.round, {backgroundColor:'#B9C6AE'}]}
                   title=""
-                  onPress={() => {this.setState({bgcolor: '#B9C6AE'})}}
+                  onPress={() => {this.setState({bgcolor: '#B9C6AE', isSelected: true})}}
                 />
               </View>
-              
+              {console.log("OS"+ Platform.OS)}
+              { Platform.OS === 'android' ? <KeyboardAvoidingView behavior='height' /> : null }  
             </View>
             <Button
               buttonStyle={styles.chatButton}
               title="Start Chatting"
               onPress={() => this.props.navigation.navigate('Chat', { uname: this.state.uname, bgcolor: this.state.bgcolor })}
             />
-          </KeyboardAvoidingView>
+          </View>
         </ImageBackground>
       </View>
     )
@@ -88,11 +90,13 @@ const styles = StyleSheet.create({
 
   },
   box1: {
-    flex:64,    
+    flex:1,
+    minHeight:20,    
   },
   box2: {
-    flex:44,
+    flex:1,
     padding: 10,
+    height:44,
     margin:20,
     borderColor:'gray',
     borderWidth:1,
@@ -112,13 +116,13 @@ const styles = StyleSheet.create({
   title: {
     alignSelf: 'center',
     textAlignVertical:'top',
-    marginTop: 50,
+    marginTop: 20,
     letterSpacing: 2,
     fontSize:45,
   },
   uname: {
     opacity:50,
-    height: 50,
+    height: 40,
     borderColor: 'gray',
     borderWidth:1,
     alignSelf: 'stretch',
@@ -150,7 +154,7 @@ const styles = StyleSheet.create({
     fontWeight:'600',
     color:'#fff',
     backgroundColor:'#757083',
-    height:50,
+    height:40,
     alignSelf: 'stretch',
     padding:5,
     margin:5,

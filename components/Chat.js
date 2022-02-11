@@ -5,6 +5,9 @@ import firebase from 'firebase';
 import firestore from 'firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // local asyncstorage for android, ios
 import NetInfo from '@react-native-community/netinfo';
+import MapView from 'react-native-maps';
+import CustomActions from './CustomActions';
+
 
 // Firebase configuration
 const firebaseConfig = {
@@ -48,9 +51,11 @@ export default class Chat extends React.Component {
       let data = doc.data();
       messages.push({
        _id: data._id,
-       text: data.text,
+       text: data.text || '',
        createdAt: data.createdAt.toDate(),
        user: data.user,
+       image: data.image || null,
+       location:data.location|| null
       });
     });
     this.setState({ 
@@ -61,12 +66,15 @@ export default class Chat extends React.Component {
   // called from onSend() when Send button is pressed
   addMessages() { 
     const message = this.state.messages[0];
-    // add a new message to the collection
+    console.log('mess'+ message.location);
+    // add a new message to the firebase collection
     this.referenceChatMessages.add({
       _id: message._id,
       text: message.text || '',
       createdAt: message.createdAt,
-      user: this.state.user
+      user: this.state.user,
+      image: message.image || null,
+      location: message.location || null
     });
   }
 
@@ -213,6 +221,7 @@ export default class Chat extends React.Component {
   // disable input message text field when offline
   renderInputToolbar(props) {
     if (this.state.isConnected == false) {
+      return <></>
     } else {
       return(
         <InputToolbar
@@ -221,6 +230,30 @@ export default class Chat extends React.Component {
       );
     }
   }
+
+  // to have the action button
+  renderCustomActions = (props) => {
+   return <CustomActions {...props} />;
+  }
+
+  //custom map view
+  renderCustomView(props) {
+    const { currentMessage } = props;
+    if (currentMessage.location) {
+      return (
+        <MapView
+          style={{ width: 150, height: 100, borderRadius: 13, margin: 3 }}
+          region={{
+            latitude: currentMessage.location.latitude,
+            longitude: currentMessage.location.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        />
+      );
+    }
+    return null;
+    }
 
   render() {
     // receive the navigation props
@@ -233,7 +266,10 @@ export default class Chat extends React.Component {
           renderBubble={this.renderBubble.bind(this)} 
           renderSystemMessage={this.renderSystemMessage.bind(this)}
           renderInputToolbar={this.renderInputToolbar.bind(this)}
+          renderActions={this.renderCustomActions}
+          renderCustomView={this.renderCustomView.bind(this)}
           messages={this.state.messages} // msg to be displayed 
+          isConnected={this.state.isConnected}
           onSend={messages => this.onSend(messages)}
           user={{ 
             _id: this.state.uid,
@@ -242,7 +278,7 @@ export default class Chat extends React.Component {
           }} // user who sends msgs
         />
       {/* console.log(this.state.messages) */}
-      { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null }
+      { Platform.OS === 'android' ? <KeyboardAvoidingView behavior='height' /> : null }
     </View>
     // <View style={[styles.container, { backgroundColor: bgcolor }]}>
      //   <Text style={styles.normalText}>Hello Screen2!</Text>
