@@ -63,7 +63,6 @@ render() {
                   onPress={() => {this.setState({bgcolor: '#B9C6AE', isSelected: true})}}
                 />
               </View>
-              {console.log("OS"+ Platform.OS)}
               { Platform.OS === 'android' ? <KeyboardAvoidingView behavior='height' /> : null }  
             </View>
             <Button
