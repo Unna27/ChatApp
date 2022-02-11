@@ -1,6 +1,5 @@
 # Chat
 > A chat app for mobile devices using React Native. The app will provide users with a chat interface and options to share images and their location..
-> Live demo  -> 
 
 ## Table of Contents
 * [General Info](#general-information)
@@ -57,18 +56,32 @@ Technical Requirements:
 
 ## Usage
 
+Install expo client globally using the following command in the terminal.
 
+npm install --global expo-cli
+
+Clone the repository:
+
+gh repo clone Unna27/ChatApp
+
+Naviagte to Chat-App directory, install the project dependencies:
+
+npm install
+
+Start up the server:
+
+npm start
+
+The Metro Bundler will be started. The App could be run either on Android or iOS simulator or download ExpoGo App from Playstore in your smartphone.
 
 ## Project Status
-Project is: _in progress_
+Project is: _in review_
 
 
 ## Room for Improvement
 
 To do:
-- Allow users to share images 
-- Allow users to share real-time location data
-- Enhance Chat UI
+- Enhance Chat UI by providing icons instead of text for custom actions (photo, location sharing,,,,)
 
 
 ## Acknowledgements
